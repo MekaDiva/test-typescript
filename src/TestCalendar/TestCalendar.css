@@ -1,0 +1,10 @@
+.testCalendar {
+    width: 100%;
+    height: 100%;
+}
+
+.eventCalendar {
+  position: absolute;
+  display: inline-block;
+  background-color: aqua;
+}

@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import TestUndoRedo from './TestUndoRedo/TestUndoRedo';
 import TestStopLight from './TestStopLight/TestStopLight';
+import TestCalendar from './TestCalendar/TestCalendar';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     path: '/test-stop-light',
     element: <TestStopLight/>,
   },
+  {
+    path: '/test-calendar',
+    element: <TestCalendar/>,
+  }
 ])
 
 const root = ReactDOM.createRoot(
