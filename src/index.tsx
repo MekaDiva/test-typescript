@@ -1,15 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App';
+import TestUndoRedo from './TestUndoRedo/TestUndoRedo';
+import TestStopLight from './TestStopLight/TestStopLight';
 import reportWebVitals from './reportWebVitals';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App/>,
+  },
+  {
+    path: '/test-undo-redo',
+    element: <TestUndoRedo/>,
+  },
+  {
+    path: '/test-stop-light',
+    element: <TestStopLight/>,
+  },
+])
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 

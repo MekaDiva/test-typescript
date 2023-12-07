@@ -1,13 +1,7 @@
 .App {
+  display: grid;
   text-align: center;
-  height: 100vh;
-}
-
-.Point {
-  display: inline-block;
-  position: absolute;
-  border: 4px solid black;
-  border-radius: 50%;
+  row-gap: 10px;
 }
 
 .App-logo {
