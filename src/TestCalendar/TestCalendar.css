@@ -6,5 +6,5 @@
 .eventCalendar {
   position: absolute;
   display: inline-block;
-  background-color: aqua;
+  text-align: center;
 }
