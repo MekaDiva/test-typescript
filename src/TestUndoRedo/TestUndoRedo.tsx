@@ -49,7 +49,7 @@ const TestUndoRedo = () => {
     <div>
       <button onClick={handleUndo}>Undo</button>
       <button onClick={handleRedo}>Redo</button>
-      <div className="App" onClick={handleClick}>
+      <div className="TestUndoRedo" onClick={handleClick}>
         {points.map((point, index) => <div className='Point' style={{
           left: point.x - 25,
           top: point.y - 25,

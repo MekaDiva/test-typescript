@@ -1,0 +1,25 @@
+.stopLight {
+  display: grid;
+  row-gap: 20px;
+}
+
+.red {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.yellow {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  border-radius: 50%;
+}
+
+.green {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  border-radius: 50%;
+}
