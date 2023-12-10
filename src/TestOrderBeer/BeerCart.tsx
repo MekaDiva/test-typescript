@@ -4,6 +4,8 @@ import { Beer } from "./TestOrderBeer";
 import { useNavigate } from "react-router-dom";
 
 import BeerItem from "./BeerItem";
+import { IconButton } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const BeerCart = () => {
   const navigate = useNavigate();
@@ -58,7 +60,9 @@ const BeerCart = () => {
         ))}
       </div>
       <div className="beer-cart-button">
-        <button style={{ width: '100%', height: '100%' }} onClick={handleGoToList}>Go to list</button>
+        <IconButton style={{ width: '100%', height: '100%', backgroundColor: 'white' }} onClick={handleGoToList}>
+          <MenuIcon />
+        </IconButton>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./TestOrderBeer.css";
 import { Beer } from "./TestOrderBeer";
+import { IconButton } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export type BeerDetailsType = {
   id: number;
@@ -98,7 +100,9 @@ const BeerDetails = () => {
         </div>
       </div>
       <div className="beer-cart-button">
-        <button style={{ width: '100%', height: '100%' }} onClick={handleGoToList}>Go to list</button>
+        <IconButton style={{ width: '100%', height: '100%', backgroundColor: 'white' }} onClick={handleGoToList}>
+          <MenuIcon />
+        </IconButton>
       </div>
     </div>
   );

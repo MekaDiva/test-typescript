@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TestOrderBeer.css";
 import BeerItem from "./BeerItem";
+import { Button, Input, IconButton } from "@mui/material";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 export type Beer = {
   id: number;
@@ -93,8 +95,8 @@ const TestOrderBeer = () => {
   return (
     <div>
       <div className="beer-header">
-        <input type="text" placeholder="Search..." style={{width: '100%'}} onChange={(event) => {setSearchText(event.target.value)}}/>
-        <button style={{width: '50%'}} onClick={handleSearch}>Search</button>
+        <Input type="text" placeholder="Search..." style={{width: '100%'}} onChange={(event) => {setSearchText(event.target.value)}}/>
+        <Button variant="contained" style={{width: '50%'}} onClick={handleSearch}>Search</Button>
       </div>
 
       <div className="beer-list">
@@ -103,7 +105,10 @@ const TestOrderBeer = () => {
         ))}
       </div>
       <div className="beer-cart-button">
-        <button style={{ width: '100%', height: '100%' }} onClick={handleGoToCart}>Go to Cart <br /> Ordered: {beersBought.length} </button>
+        <IconButton style={{ width: '100%', height: '100%', backgroundColor: 'white' }} onClick={handleGoToCart}>
+          <AddShoppingCartIcon/>
+          {beersBought.length}
+        </IconButton>
       </div>
     </div>
   );
