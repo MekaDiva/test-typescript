@@ -17,6 +17,8 @@ export type Beer = {
 const TestOrderBeer = () => {
   const [beers, setBeers] = useState<Beer[]>([]);
 
+  const [searchText, setSearchText] = useState<string>('');
+
   const beersBoughtFromLocalStorage = JSON.parse(localStorage.getItem('beersBought') || '[]') as Beer[];
   const [beersBought, setBeersBought] = useState<Beer[]>(beersBoughtFromLocalStorage);
 
@@ -29,16 +31,34 @@ const TestOrderBeer = () => {
       .then(data => setBeers(data));
   }, []);
 
-  // Store beers in cart
+  // Store beers in cart in local storage
   useEffect(() => {
     localStorage.setItem('beersBought', JSON.stringify(beersBought));
   }, [beersBought]);
 
+  // Click on the search button
+  const handleSearch = () => {
+    console.log('Search');
+    if (searchText === '') {
+      fetch('https://api.punkapi.com/v2/beers')
+        .then(response => response.json())
+        .then(data => setBeers(data));
+      return;
+    }
+    else {
+      fetch(`https://api.punkapi.com/v2/beers?beer_name=${searchText}`)
+      .then(response => response.json())
+      .then(data => setBeers(data));
+    }
+  };
+
+  // Click on the beer item
   const handleClickedBeer = (beer: Beer) => {
     console.log(beer);
     navigate(`/beer-details/${beer.id}`);
   };
 
+  // Add beer to cart
   const handleAddToCart = (beer: Beer) => {
     console.log('Add to Cart', beer);
     var newOrder = [...beersBought];
@@ -51,6 +71,7 @@ const TestOrderBeer = () => {
     }
   };
 
+  // Remove beer from cart
   const handleRemoveFromCart = (beer: Beer) => {
     console.log('Remove from Cart', beer);
     var newOrder = [...beersBought];
@@ -63,6 +84,7 @@ const TestOrderBeer = () => {
     }
   };
 
+  // Go to cart
   const handleGoToCart = () => {
     console.log('Go to Cart');
     navigate('/beer-cart');
@@ -71,8 +93,8 @@ const TestOrderBeer = () => {
   return (
     <div>
       <div className="beer-header">
-        <input type="text" placeholder="Search..." style={{width: '100%'}}/>
-        <button style={{width: '50%'}}>Search</button>
+        <input type="text" placeholder="Search..." style={{width: '100%'}} onChange={(event) => {setSearchText(event.target.value)}}/>
+        <button style={{width: '50%'}} onClick={handleSearch}>Search</button>
       </div>
 
       <div className="beer-list">

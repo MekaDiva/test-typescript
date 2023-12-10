@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./TestOrderBeer.css";
 import { Beer } from "./TestOrderBeer";
 
@@ -35,9 +35,11 @@ export type BeerDetailsType = {
 };
 
 const BeerDetails = () => {
+  const navigate = useNavigate();
+
   const beersBoughtFromLocalStorage = JSON.parse(localStorage.getItem('beersBought') || '[]') as Beer[];
   const [beersBought, setBeersBought] = useState<Beer[]>(beersBoughtFromLocalStorage);
-  
+
   const [beerInfo, setBeerInfo] = useState<BeerDetailsType>();
   const params = useParams();
 
@@ -46,6 +48,11 @@ const BeerDetails = () => {
       .then(response => response.json())
       .then(data => setBeerInfo(data[0]));
   }, []);
+
+  const handleGoToList = () => {
+    console.log('Go to List');
+    navigate('/test-order-beer');
+  };
 
   console.log(beerInfo);
 
@@ -89,6 +96,9 @@ const BeerDetails = () => {
             <p>{beerInfo?.ingredients.yeast}</p>
           </div>
         </div>
+      </div>
+      <div className="beer-cart-button">
+        <button style={{ width: '100%', height: '100%' }} onClick={handleGoToList}>Go to list</button>
       </div>
     </div>
   );
