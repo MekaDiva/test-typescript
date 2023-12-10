@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TestOrderBeer.css";
 import BeerItem from "./BeerItem";
-import BeersContext from "./beers.context";
 
 export type Beer = {
   id: number;
@@ -12,21 +11,28 @@ export type Beer = {
     unit: string;
     value: number;
   };
+  isInCart: boolean;
 };
 
 const TestOrderBeer = () => {
   const [beers, setBeers] = useState<Beer[]>([]);
-  const [beersBought, setBeersBought] = useState<Beer[]>([]);
+
+  const beersBoughtFromLocalStorage = JSON.parse(localStorage.getItem('beersBought') || '[]') as Beer[];
+  const [beersBought, setBeersBought] = useState<Beer[]>(beersBoughtFromLocalStorage);
 
   const navigate = useNavigate();
 
+  // Fetch beers from API
   useEffect(() => {
     fetch('https://api.punkapi.com/v2/beers')
       .then(response => response.json())
       .then(data => setBeers(data));
   }, []);
 
-  //console.log(beers);
+  // Store beers in cart
+  useEffect(() => {
+    localStorage.setItem('beersBought', JSON.stringify(beersBought));
+  }, [beersBought]);
 
   const handleClickedBeer = (beer: Beer) => {
     console.log(beer);
@@ -36,8 +42,23 @@ const TestOrderBeer = () => {
   const handleAddToCart = (beer: Beer) => {
     console.log('Add to Cart', beer);
     var newOrder = [...beersBought];
-    if (!newOrder.includes(beer)) {
+
+    const beerInCart = newOrder.find(b => b.id === beer.id);
+
+    if (!beerInCart) {
       newOrder.push(beer);
+      setBeersBought(newOrder);
+    }
+  };
+
+  const handleRemoveFromCart = (beer: Beer) => {
+    console.log('Remove from Cart', beer);
+    var newOrder = [...beersBought];
+
+    const beerInCart = newOrder.find(b => b.id === beer.id);
+
+    if (beerInCart) {
+      newOrder = newOrder.filter(b => b.id !== beer.id);
       setBeersBought(newOrder);
     }
   };
@@ -49,21 +70,19 @@ const TestOrderBeer = () => {
 
   return (
     <div>
-      <BeersContext.Provider value={{beers, setBeers}}>
-        <div className="beer-header">
-          <input type="text" placeholder="Search..." />
-          <button>Search</button>
-        </div>
+      <div className="beer-header">
+        <input type="text" placeholder="Search..." style={{width: '100%'}}/>
+        <button style={{width: '50%'}}>Search</button>
+      </div>
 
-        <div className="beer-list">
-          {beers.map(beer => (
-            <BeerItem key={beer.id} beer={beer} onClickBeer={handleClickedBeer} onClickAddToCart={handleAddToCart} />
-          ))}
-        </div>
-        <div className="beer-cart-button">
-          <button style={{ width: '100%', height: '100%' }} onClick={handleGoToCart}>Go to Cart <br /> Ordered: {beersBought.length} </button>
-        </div>
-      </BeersContext.Provider>
+      <div className="beer-list">
+        {beers.map(beer => (
+          <BeerItem key={beer.id} beer={beer} beersBought={beersBought} onClickBeer={handleClickedBeer} onClickAddToCart={handleAddToCart} onClickRemoveFromCart={handleRemoveFromCart}/>
+        ))}
+      </div>
+      <div className="beer-cart-button">
+        <button style={{ width: '100%', height: '100%' }} onClick={handleGoToCart}>Go to Cart <br /> Ordered: {beersBought.length} </button>
+      </div>
     </div>
   );
 };

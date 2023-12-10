@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./TestOrderBeer.css";
-import BeersContext from "./beers.context";
+import { Beer } from "./TestOrderBeer";
 
 export type BeerDetailsType = {
   id: number;
@@ -35,6 +35,9 @@ export type BeerDetailsType = {
 };
 
 const BeerDetails = () => {
+  const beersBoughtFromLocalStorage = JSON.parse(localStorage.getItem('beersBought') || '[]') as Beer[];
+  const [beersBought, setBeersBought] = useState<Beer[]>(beersBoughtFromLocalStorage);
+  
   const [beerInfo, setBeerInfo] = useState<BeerDetailsType>();
   const params = useParams();
 

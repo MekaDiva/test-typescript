@@ -11,4 +11,4 @@ const BeersContext = createContext<BeersContextType>({
   setBeers: () => {},
 });
 
-export default BeersContext;
+export default BeersContext; 
