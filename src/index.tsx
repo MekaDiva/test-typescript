@@ -6,6 +6,10 @@ import App from './App';
 import TestUndoRedo from './TestUndoRedo/TestUndoRedo';
 import TestStopLight from './TestStopLight/TestStopLight';
 import TestCalendar from './TestCalendar/TestCalendar';
+import TestOrderBeer from './TestOrderBeer/TestOrderBeer';
+import BeerDetails from './TestOrderBeer/BeerDetails';
+import BeerCart from './TestOrderBeer/BeerCart';
+
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -24,6 +28,18 @@ const router = createBrowserRouter([
   {
     path: '/test-calendar',
     element: <TestCalendar/>,
+  },
+  {
+    path: '/test-order-beer',
+    element: <TestOrderBeer/>,
+  },
+  {
+    path: '/beer-details/:beerId',
+    element: <BeerDetails/>,
+  },
+  {
+    path: '/beer-cart',
+    element: <BeerCart/>,
   }
 ])
 

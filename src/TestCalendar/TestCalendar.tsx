@@ -40,13 +40,7 @@ const TestCalendar = () => {
   function eventWidthLeftPer(data: Event[]) {
     var newData = [...data];
     newData.sort((a, b) => {
-      if (a.startPer < b.startPer) {
-        return -1;
-      }
-      if (a.startPer > b.startPer) {
-        return 1;
-      }
-      return 0;
+      return a.startPer - b.startPer;
     });
 
     var groupes: Event[][] = [];
@@ -57,11 +51,12 @@ const TestCalendar = () => {
         groupes.push([currentEvent]);
       } else {
         var newGroupe = true;
-        groupes[groupes.length - 1].forEach(event => {
+        for (let index = 0; index < groupes[groupes.length - 1].length; index++) {
+          const event = groupes[groupes.length - 1][index];
           if (currentEvent.startPer < event.endPer) {
             newGroupe = false;
           }
-        });
+        }
 
         if (newGroupe) {
           groupes.push([currentEvent]);
@@ -84,21 +79,17 @@ const TestCalendar = () => {
         fullStack.push({
           key: "start",
           value : currentEvent.startPer,
+          event: currentEvent,
         });
         fullStack.push({
           key: "end",
           value : currentEvent.endPer,
+          event: currentEvent,
         });
       }
 
       fullStack.sort((a, b) => {
-        if (a.value < b.value) {
-          return -1;
-        }
-        if (a.value > b.value) {
-          return 1;
-        }
-        return 0;
+        return a.value - b.value;
       });
 
       // Find max superposition
@@ -110,20 +101,36 @@ const TestCalendar = () => {
         } else {
           if (fullStack[j].key === "start") {
             stack.push(fullStack[j].key);
-            maxSurperposition = stack.length;
+            maxSurperposition = Math.max(stack.length, maxSurperposition);
           } else {
             stack.pop();
           }
         }
       }
 
-      // Add width and left
+      // Add width
       for (j = 0; j < groupe.length; j++) {
         currentEvent = groupe[j];
         currentEvent.widthPer = 1 / maxSurperposition;
-        
-        var leftIndex = j % maxSurperposition;
-        currentEvent.leftPer = leftIndex / maxSurperposition;
+      }
+
+      // Add left
+      //console.log(fullStack);
+      var positionStack = [];
+      for (let index = 0; index < maxSurperposition; index++) {
+        positionStack.push(index / maxSurperposition);
+      }
+
+      for (let index = 0; index < fullStack.length; index++) {
+        const element = fullStack[index];
+        if (element.key === "start") {
+          // Give the event the first position in the stack
+          element.event.leftPer = positionStack.shift()!;
+        }
+        else {
+          // Give back the position to the stack
+          positionStack.push(element.event.leftPer);
+        }
       }
     }
 

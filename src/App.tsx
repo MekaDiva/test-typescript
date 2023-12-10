@@ -8,6 +8,7 @@ const App = () => {
       <Link to='/test-undo-redo'>Test Undo Redo</Link>
       <Link to='/test-stop-light'>Test Stop Light</Link>
       <Link to='/test-calendar'>Test Calendar</Link>
+      <Link to='/test-order-beer'>Test Order Beer</Link>
     </div>
   );
 }
