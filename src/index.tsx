@@ -9,6 +9,7 @@ import TestCalendar from './TestCalendar/TestCalendar';
 import TestOrderBeer from './TestOrderBeer/TestOrderBeer';
 import BeerDetails from './TestOrderBeer/BeerDetails';
 import BeerCart from './TestOrderBeer/BeerCart';
+import TestAuthen from './TestAuthen/TestAuthen';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
   {
     path: '/beer-cart',
     element: <BeerCart/>,
-  }
+  },
+  {
+    path: '/test-authen',
+    element: <TestAuthen/>,
+  },
 ])
 
 const root = ReactDOM.createRoot(
